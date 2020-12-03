@@ -1,4 +1,5 @@
 {
+  "private": true,
   "dependencies": {
     "@rails/webpacker": "4.3.0"
   },
