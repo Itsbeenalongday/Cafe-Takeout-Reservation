@@ -21,10 +21,12 @@ ActiveAdmin.register ProductDescription do
     column :name
     column :price
     column :description do |pd|
-      pd.body.truncate(20,omission: '...')
+      pd.description.truncate(20,omission: '...')
     end
     column :avg_producingtime
-    column :image
+    column :image do |image|
+      image_tag(image.image.url)
+    end
     actions
   end
 
