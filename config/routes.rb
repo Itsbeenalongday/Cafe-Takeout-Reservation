@@ -3,4 +3,11 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  resources :orders do
+    collection do
+      get :running_total
+      get :select_product
+    end
+  end
 end
