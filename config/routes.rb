@@ -7,9 +7,9 @@ Rails.application.routes.draw do
   root 'order#index'
   
   resources :orders do
-    collection do
-      get :running_total
+    member do
       get :select_product
+      get :show_menu
     end
   end
 end

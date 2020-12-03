@@ -1,0 +1,8 @@
+주문내역 확인
+총합계 : <%=@order.total_price%>원<br/>
+<%@order.order_line_items.each do |oli|%>
+ <img src="<%=ProductDescription.find_by(id: oli.product_description_id).image%>"><br/>
+ 제품명: <%=ProductDescription.find_by(id: oli.product_description_id).name%><br/>
+ 수량: <%=oli.quantity%><br/>
+<%end%>
+
