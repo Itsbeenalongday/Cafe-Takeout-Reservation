@@ -14,9 +14,24 @@ def destroy_all_product_description
   ProductDescription.destroy_all
   puts "ProductDescription 삭제"
 end
+
 def destroy_all_AdminUser
   AdminUser.destroy_all
   puts "AdminUser 삭제"
+end
+
+def destroy_all_User
+  User.destroy_all
+  puts "User 삭제"
+end
+
+def destroy_all_order
+  Order.destroy_all
+  puts "Order 객체 삭제"
+end
+
+def get_user
+  User.order("RANDOM()").first
 end
 
 def generate_product_description
@@ -29,11 +44,21 @@ def generate_product_description
 end
 
 def generate_User
+  10.times do 
+    User.create(name: Faker::Name.name, phone: "010"+ Random.rand(1000..9999).to_s + Random.rand(1000..9999).to_s, password: "password", email: Faker::Internet.email)
+    puts "User 생성"
+  end
+end
 
+def generate_order
+  10.times do
+    #get_user.Order.create(order_at: Date.today, total_price: )
+  end
 end
 
 destroy_all_AdminUser
 destroy_all_product_description
 generate_product_description
+generate_User
 
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
