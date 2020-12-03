@@ -1,3 +1,5 @@
 class ProductDescription < ApplicationRecord
-    has_one :product_rating
+  mount_uploader :image, ImageUploader  
+  has_one :product_rating
+    
 end
