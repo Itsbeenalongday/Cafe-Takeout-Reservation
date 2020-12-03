@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_03_070200) do
+ActiveRecord::Schema.define(version: 2020_12_03_073305) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 2020_12_03_070200) do
     t.boolean "evaluable"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "order_id", null: false
+    t.index ["order_id"], name: "index_order_line_items_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -53,6 +55,8 @@ ActiveRecord::Schema.define(version: 2020_12_03_070200) do
     t.datetime "pickup_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "product_descriptions", force: :cascade do |t|
@@ -95,5 +99,7 @@ ActiveRecord::Schema.define(version: 2020_12_03_070200) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "order_line_items", "orders"
+  add_foreign_key "orders", "users"
   add_foreign_key "product_ratings", "product_descriptions"
 end

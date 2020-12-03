@@ -1,3 +1,3 @@
 class ProductDescription < ApplicationRecord
-    belongs_to :product_rating
+    has_one :product_rating
 end
