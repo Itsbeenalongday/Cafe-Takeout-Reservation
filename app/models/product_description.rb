@@ -1,5 +1,5 @@
 class ProductDescription < ApplicationRecord
   mount_uploader :image, ImageUploader  
   has_one :product_rating
-  has_one :order_line_tiem  
+  has_one :order_line_time  
 end

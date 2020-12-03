@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  #before_action :authenticate_user!, except: %i(index)
+  before_action :authenticate_user!, except: %i(index)
   before_action :load_product_description, only: %i(running_total)
   before_action :load_order, only: %i(create running_total select_product)
   #before_action :orderlineitem_params, only: %i(select_product)
@@ -8,18 +8,20 @@ class OrdersController < ApplicationController
     @product_descriptions = ProductDescription.all
   end
 
-  def select_product
-    byebug
+  def create
     @order = Order.new
+    @order.user_id = current_user.id
+    @order.total_price = 0
+    @order.save
+  end
+
+  def select_product
     @oli = @order.order_line_items.new
     @oli.product_description_id = params[:product_id]
     @oli.quantity = params[:quantity]
-    @oli.save
     @order.total_price += ProductDescription.find_by(id: @oli.product_description_id).price * @oli.quantity
-  end
-
-  def create
-    
+    @oli.save
+    redirect_to orders_path
   end
   
   def update
