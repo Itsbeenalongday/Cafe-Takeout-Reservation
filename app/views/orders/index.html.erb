@@ -1,0 +1,9 @@
+<%@product_descriptions.each do |pd|%>
+  <%=pd.name%><br/>
+  <%=pd.id%><br/>
+  <%=pd.price%><br/>
+  <%=pd.avg_producingtime%>
+  image:<br/>
+  <img src="<%= pd.image %>">
+  <%= link_to "선택",select_product_orders_path(product_id: pd.id, quantity: 5) %>
+<%end%>
