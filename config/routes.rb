@@ -12,4 +12,6 @@ Rails.application.routes.draw do
       get :show_menu
     end
   end
+
+  resources :payment
 end
