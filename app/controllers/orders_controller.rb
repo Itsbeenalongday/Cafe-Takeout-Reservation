@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!, except: %i(index)
   before_action :load_product_description, only: %i(add_to_cart)
   before_action :load_order, only: %i(select_product show)
-  before_action :load_cart, only: %i(new cart_menu add_to_cart remove_from_cart)
+  before_action :load_cart, only: %i(new cart_menu add_to_cart remove_from_cart complete) 
   #before_action :orderlineitem_params, only: %i(select_product)
 
   def index
@@ -24,8 +24,16 @@ class OrdersController < ApplicationController
   end
 
   def complete
-    byebug
-    result = Iamport.payment(params[:id])
+    #result = Iamport.payment(params[:id])
+    @complete = current_user.get_complete
+    @complete.order_line_items.each do |oli|
+      @stock = ProductSalesVolume.find_by(product_description_id: oli.product_description_id)
+      if @stock.nil?
+        ProductSalesVolume.create(product_description_id: oli.product_description_id, volume: oli.quantity)
+      else
+        @stock.volume += oli.quantity
+      end
+    end
   end 
   
   def cart_menu 

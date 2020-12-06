@@ -9,6 +9,10 @@ class User < ApplicationRecord
 
   def get_cart
     order = self.orders.cart.first_or_create
-  end 
+  end
+
+  def get_complete
+    order = self.orders.complete.last
+  end
 end
 
