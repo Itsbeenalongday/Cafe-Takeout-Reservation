@@ -1,5 +1,4 @@
 Iamport.configure do |config|
-    # Admin 체험버전 api_key, api_secret
     config.api_key = "4955952430566046"
     config.api_secret = "Q6JC6jwyg66cGlG2peG1k7DmCDtrUehKk1nrlT0B07NGstJSIqU2yxpaaTC57TQsVdUg7US81FOu9ymS"
 end
@@ -14,6 +13,6 @@ class PaymentController < ApplicationController
   def update;end
 
   def destroy;end
-  
+
 end
   

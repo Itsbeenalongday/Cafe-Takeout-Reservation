@@ -32,7 +32,7 @@
           </div>
         </li>
         <li class="nav-item mr-3">
-          <div class="nav-link font-nav font-item"><%= current_user.name %>님 어서오세요!</div>
+          <div class="nav-link font-nav font-item"><%= current_user.email %>님 어서오세요!</div>
         </li>
         <li class="nav-item mr-3">
           <%= link_to "로그아웃", destroy_user_session_path, method: :delete, class: "nav-link font-nav font-item" %>

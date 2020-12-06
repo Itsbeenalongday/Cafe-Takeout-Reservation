@@ -92,7 +92,7 @@ a {
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Save changes</button>
-          <%= link_to "결제하기", new_payment_path %>
+          <%= link_to "결제하기", new_payment_path(total_price: @cart.line_item_total) %>
         </div>
       </div>
     </div>

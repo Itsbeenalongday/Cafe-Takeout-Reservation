@@ -1,3 +1,8 @@
+Iamport.configure do |config|
+  config.api_key = "4955952430566046"
+  config.api_secret = "Q6JC6jwyg66cGlG2peG1k7DmCDtrUehKk1nrlT0B07NGstJSIqU2yxpaaTC57TQsVdUg7US81FOu9ymS"
+end
+
 class OrdersController < ApplicationController
   before_action :authenticate_user!, except: %i(index)
   before_action :load_product_description, only: %i(add_to_cart)
@@ -18,7 +23,10 @@ class OrdersController < ApplicationController
     redirect_to complete_orders_path
   end
 
-  def complete;end 
+  def complete
+    byebug
+    result = Iamport.payment(params[:id])
+  end 
   
   def cart_menu 
     @line_items = @cart.order_line_items
