@@ -3,5 +3,12 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :order
+         
+  USER_COLUMNS = %i(name phone)
+  has_many :orders
+
+  def get_cart
+    order = self.orders.cart.first_or_create
+  end 
 end
+

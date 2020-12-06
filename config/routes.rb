@@ -4,14 +4,20 @@ Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-  root 'order#index'
+  root 'home#index'
   
   resources :orders do
     member do
       get :select_product
-      get :show_menu
+      #get :show_menu
     end
+    collection do 
+      get :cart_menu
+      get :add_to_cart
+      get :remove_from_cart
+      get :complete
+    end 
   end
-
+  resources :menus
   resources :payment
 end

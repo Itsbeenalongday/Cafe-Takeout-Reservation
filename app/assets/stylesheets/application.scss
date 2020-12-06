@@ -12,4 +12,15 @@
  *
  *= require_tree .
  *= require_self
+ *= require bootstrap-datepicker3
+ *= require bootstrap-timepicker
  */
+
+ @import "font-awesome";
+ @import "bootstrap-timepicker";
+ @import "jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css";
+
+ 
+ 
+
+ 

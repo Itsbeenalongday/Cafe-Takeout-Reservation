@@ -1,29 +1,51 @@
-<h2>Sign up</h2>
+<style>
+  body{
+    background-image: url("/images/background.jpg");
+    background-size: cover;
+  }
+</style>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="container">
+  <div class="row">
+    <div class="card col-md-6 offset-md-3 p-5 mt-5" style="border:2px solid warning; font-size:16px;">
+      <div class="panel-body">
+        <div class="mar-ver pad-btm" style="font-weight:bold">
+          <h5>회원가입</h5>
+          <hr>
+        </div>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <div class="form-group" style="width:600px">
+          <dt><%= f.label :name %><br/></dt>
+          <%= f.text_field :name, class: "form-control", autocomplete: "name" %>
+        </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <div class="form-group" style="width:600px">
+          <dt><%= f.label :email %><br/></dt>
+          <%= f.email_field :email, class: "form-control", autofocus: false, autocomplete: "email" %>
+        </div>
+
+        <div class="form-group" style="width:600px">
+          <dt><%= f.label :phone %><br/></dt>
+          <%= f.text_field :phone, class: "form-control", autofocus: false, autocomplete: "phone" %>
+        </div>
+
+        <div class="form-group" style="width:600px">
+          <dt><%= f.label :password %><br/></dt>
+          <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
+        </div>
+
+        <div class="form-group" style="width:600px">
+          <dt><%= f.label :password_confirmation %><br/></dt>
+          <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "회원가입", class: "btn btn-dark btn-block", style:"background-color:black !important" %>
+        </div>
+        <hr>
+      <% end %>
+    </div>
+    <%= render "devise/shared/links" %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
