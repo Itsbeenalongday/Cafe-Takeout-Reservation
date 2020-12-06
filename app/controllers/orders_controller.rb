@@ -6,7 +6,7 @@ end
 class OrdersController < ApplicationController
   before_action :authenticate_user!, except: %i(index)
   before_action :load_product_description, only: %i(add_to_cart)
-  before_action :load_order, only: %i(select_product show)
+  before_action :load_order, only: %i(select_product show complete)
   before_action :load_cart, only: %i(new cart_menu add_to_cart remove_from_cart)
   #before_action :orderlineitem_params, only: %i(select_product)
 
@@ -20,11 +20,12 @@ class OrdersController < ApplicationController
     # 결제 완료 페이지에서 간략한 정보 출력 ui 신경 X
     # 주문 정보랑, 결제 금액 정도만 간략히 보여주도록, 내가 작업할 수 있게
     @cart.update(total_price: @cart.line_item_total, order_at: Time.now)
+    @order.complete!
+    byebug
     redirect_to complete_orders_path
   end
 
   def complete
-    byebug
     result = Iamport.payment(params[:id])
   end 
   
