@@ -28,9 +28,7 @@ class OrdersController < ApplicationController
     @date = params[:date]
     date = @date.split('/')
     @pickup_time = DateTime.parse(params[:time])
-    @pickup_time.change(year: date[2].to_i, month:date[0].to_i, day: date[1].to_i)
-    @order.update(pickup_time: @pickup_time)
-    redirect_back(fallback_location: root_path)
+    @order.update(pickup_time: @pickup_time.change(year: date[2].to_i, month:date[0].to_i, day: date[1].to_i))
   end
 
   def complete
