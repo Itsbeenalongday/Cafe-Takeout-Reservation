@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   has_many :order_line_items, dependent: :destroy
   belongs_to :user
-
+  has_one :payment
   enum status: %i(cart complete cancel)
   
   def line_item_total

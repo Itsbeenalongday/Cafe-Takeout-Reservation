@@ -32,8 +32,9 @@ class OrdersController < ApplicationController
   end
 
   def complete
-    #result = Iamport.payment(params[:id])
+    result = Iamport.payment(params[:id])
     @complete = current_user.get_complete
+    Payment.create(paid_at: DateTime.strptime(result['response']['paid_at'].to_s,'%s'), amount: result['response']['amount'],order_id: @complete.id)
     @complete.order_line_items.each do |oli|
       @stock = ProductSalesVolume.find_by(product_description_id: oli.product_description_id)
       if @stock.nil?

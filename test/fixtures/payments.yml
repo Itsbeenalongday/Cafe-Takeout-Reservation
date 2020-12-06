@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  paid_at: 2020-12-06 23:53:41
+  amount: 1
+  order: one
+
+two:
+  paid_at: 2020-12-06 23:53:41
+  amount: 1
+  order: two
