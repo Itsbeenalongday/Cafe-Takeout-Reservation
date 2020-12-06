@@ -6,4 +6,4 @@
  수량: <%=oli.quantity%><br/>
 <%end%>
 
-<%= link_to '결제하기', new_payment_path %>
+<%= link_to '결제하기', new_payment_path(order_id: @order.id) %>
