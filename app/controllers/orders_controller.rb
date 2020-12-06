@@ -6,8 +6,8 @@ end
 class OrdersController < ApplicationController
   before_action :authenticate_user!, except: %i(index)
   before_action :load_product_description, only: %i(add_to_cart)
-  before_action :load_order, only: %i(select_product show complete)
-  before_action :load_cart, only: %i(new cart_menu add_to_cart remove_from_cart)
+  before_action :load_order, only: %i(select_product show)
+  before_action :load_cart, only: %i(new cart_menu add_to_cart remove_from_cart complete) 
   #before_action :orderlineitem_params, only: %i(select_product)
 
   def index
@@ -26,8 +26,21 @@ class OrdersController < ApplicationController
   end
 
   def complete
-    result = Iamport.payment(params[:id])
+    #result = Iamport.payment(params[:id])
+    @complete = current_user.get_complete
+    @complete.order_line_items.each do |oli|
+      @stock = ProductSalesVolume.find_by(product_description_id: oli.product_description_id)
+      if @stock.nil?
+        ProductSalesVolume.create(product_description_id: oli.product_description_id, volume: oli.quantity)
+      else
+        @stock.volume += oli.quantity
+        @stock.save
+      end
+    end
   end 
+
+  def update_quantity
+  end
   
   def cart_menu 
     @line_items = @cart.order_line_items
@@ -35,7 +48,13 @@ class OrdersController < ApplicationController
 
   def add_to_cart
     if @cart.present?
-      @cart.order_line_items.create(product_description_id: @product.id, quantity: 1, total: @product.price, evaluable: false)
+      if (target = @cart.order_line_items.find_by(product_description_id: @product.id)).present?
+        target.quantity += 1
+        target.total = (@product.price * target.quantity )
+        target.save
+      else
+        @cart.order_line_items.create(product_description_id: @product.id, quantity: 1, total: @product.price, evaluable: false)
+      end 
     end 
     redirect_back(fallback_location: root_path)
   end 

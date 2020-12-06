@@ -64,14 +64,31 @@ a {
     <% @menu.each do |menu|%>
       <div class="col-3 card coffee-card px-0 mx-2 mb-4" style="background-color: #f2f2f2">
         <div class="text-left">
-          <%= link_to "+", add_to_cart_orders_path(product_description_id: menu.id), class: "font-weight-bold float-right mr-3", style: "font-size: 30px;" %>
+          <%= link_to "+", add_to_cart_orders_path(product_description_id: menu.id ), class: "font-weight-bold float-right mr-3", style: "font-size: 30px;" %>
         </div>
         <img src="/images/아메리카노2.jpg" class="card-img-top">
         <div class="card-body text-center main-font mb-2">
           <h4 class="card-text font-weight-bold"><%= link_to "#{menu.name}", menu_path(menu.id) %></h4>
           <div style="font-size: 19px;"><%= number_with_delimiter menu.price %> 원</div>
+          <div class="qty mt-5">
+            <input type="number" class="form-control count" name="qty" value="1" min="1">
+          </div>
         </div>
       </div>
     <% end %>
   </div>
 </div>
+<%# <script>
+  var value = $('.form-control count').val();
+  console.log(value);
+  $('.font-weight-bold float-right mr-3').click(function(e){
+    Rails.ajax({
+      url: "",
+        type: "POST",
+        success: function(data) {
+          console.log(value);
+        },
+        error: function(data) {}
+      });
+    });
+</script> %>

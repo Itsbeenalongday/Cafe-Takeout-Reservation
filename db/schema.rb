@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_06_052415) do
+ActiveRecord::Schema.define(version: 2020_12_06_084945) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -81,6 +81,14 @@ ActiveRecord::Schema.define(version: 2020_12_06_052415) do
     t.index ["product_description_id"], name: "index_product_ratings_on_product_description_id"
   end
 
+  create_table "product_sales_volumes", force: :cascade do |t|
+    t.integer "volume"
+    t.integer "product_description_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_description_id"], name: "index_product_sales_volumes_on_product_description_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "status"
@@ -108,4 +116,5 @@ ActiveRecord::Schema.define(version: 2020_12_06_052415) do
   add_foreign_key "order_line_items", "product_descriptions"
   add_foreign_key "orders", "users"
   add_foreign_key "product_ratings", "product_descriptions"
+  add_foreign_key "product_sales_volumes", "product_descriptions"
 end

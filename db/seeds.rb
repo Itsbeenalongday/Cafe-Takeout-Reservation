@@ -10,7 +10,10 @@ IMAGEPATH = "/public/images/"
 
 Arr =[3000,3500,4000,4500,5000]
 
+
 def destroy_all_product_description
+  ProductSalesVolume.destroy_all
+  OrderLineItem.destroy_all
   ProductDescription.destroy_all
   puts "ProductDescription 삭제"
 end
@@ -38,7 +41,8 @@ def generate_product_description
   
     SIMAGE.each do |pd|
       imagePath = File.open("#{Rails.root}"+ IMAGEPATH + pd +".jpg")
-      ProductDescription.create(name: pd, price: Arr.shuffle.first, description: pd + "입니다.", avg_producingtime: 5, image: imagePath)
+      productnew = ProductDescription.create(name: pd, price: Arr.shuffle.first, description: pd + "입니다.", avg_producingtime: 5, image: imagePath)
+      ProductSalesVolume.create(volume: Random.rand(100..300), product_description_id: productnew.id)
       puts "음료 생성"
     end
 end
@@ -56,8 +60,8 @@ def generate_order
   end
 end
 
-destroy_all_AdminUser
 destroy_all_product_description
+destroy_all_AdminUser
 generate_product_description
 generate_User
 
