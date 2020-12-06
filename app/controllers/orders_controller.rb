@@ -32,6 +32,7 @@ class OrdersController < ApplicationController
         ProductSalesVolume.create(product_description_id: oli.product_description_id, volume: oli.quantity)
       else
         @stock.volume += oli.quantity
+        @stock.save
       end
     end
   end 
