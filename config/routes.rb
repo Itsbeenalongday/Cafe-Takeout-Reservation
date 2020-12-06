@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     collection do 
       get :cart_menu
       get :add_to_cart
+      get :set_pickuptime
       get :remove_from_cart
       get :complete
     end 
