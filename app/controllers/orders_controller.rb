@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!, except: %i(index)
   before_action :load_product_description, only: %i(add_to_cart)
   before_action :load_order, only: %i(select_product show set_pickuptime)
-  before_action :load_cart, only: %i(new cart_menu add_to_cart remove_from_cart complete)
+  before_action :load_cart, only: %i(new cart_menu add_to_cart remove_from_cart complete set_pickuptime)
 
   def index
     @product_descriptions = ProductDescription.all
@@ -19,8 +19,7 @@ class OrdersController < ApplicationController
     # 결제 완료 페이지에서 간략한 정보 출력 ui 신경 X
     # 주문 정보랑, 결제 금액 정도만 간략히 보여주도록, 내가 작업할 수 있게
     @cart.update(total_price: @cart.line_item_total, order_at: Time.now)
-    @order.update(status: "complete")
-    byebug
+    #@order.update(status: "complete")
     redirect_to complete_orders_path
   end
 
@@ -28,12 +27,15 @@ class OrdersController < ApplicationController
     @date = params[:date]
     date = @date.split('/')
     @pickup_time = DateTime.parse(params[:time])
-    @order.update(pickup_time: @pickup_time.change(year: date[2].to_i, month:date[0].to_i, day: date[1].to_i))
+    @cart.update(total_price: @cart.line_item_total, order_at: Time.now)
+    @cart.update(pickup_time: @pickup_time.change(year: date[2].to_i, month:date[0].to_i, day: date[1].to_i), status: "complete")
   end
 
   def complete
+    #result = Iamport.payment(params[:id])
     result = Iamport.payment(params[:id])
     @complete = current_user.get_complete
+    @complete_line_item = @complete.order_line_items
     Payment.create(paid_at: DateTime.strptime(result['response']['paid_at'].to_s,'%s'), amount: result['response']['amount'],order_id: @complete.id)
     @complete.order_line_items.each do |oli|
       @stock = ProductSalesVolume.find_by(product_description_id: oli.product_description_id)
@@ -46,7 +48,8 @@ class OrdersController < ApplicationController
     end
   end 
 
-  def update_quantity
+  def connect_payment
+    @order.create()
   end
   
   def cart_menu 
