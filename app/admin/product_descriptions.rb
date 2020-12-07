@@ -14,7 +14,7 @@ ActiveAdmin.register ProductDescription do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # 
-  permit_params :price, :name, :description, :avg_producingtime, :image, :ProductSalesVolume_id
+  permit_params :price, :name, :description, :avg_producingtime, :image, :ProductSalesVolume_id, :ProductSalesVolume
   index do
     selectable_column
     id_column
@@ -42,8 +42,9 @@ ActiveAdmin.register ProductDescription do
         image_tag(pd.image.url)
       end
       row :stocks do |pd|
-        ProductSalesVolume.find(pd.id)
+        ProductSalesVolume.find_by(product_description_id: pd.id).volume
       end
+      
     end
   end
 

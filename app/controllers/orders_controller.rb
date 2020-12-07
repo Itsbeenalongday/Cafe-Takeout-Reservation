@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
     # 결제 완료 페이지에서 간략한 정보 출력 ui 신경 X
     # 주문 정보랑, 결제 금액 정도만 간략히 보여주도록, 내가 작업할 수 있게
     @cart.update(total_price: @cart.line_item_total, order_at: Time.now)
-    @order.complete!
+    @order.update(status: "complete")
     byebug
     redirect_to complete_orders_path
   end
